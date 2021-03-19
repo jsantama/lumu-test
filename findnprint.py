@@ -3,21 +3,28 @@ import os
 path=input("Please type the path for check the files: ")
 print("The path will be",path)
 
-def file_size(fname):
-        info = os.stat(fname)
-        return info.st_size
+path="/var/log"
+total_s=0
+total_files=len(os.listdir(path))
+top_5 = []
 
-nfiles=0
-files=[]
-filesize=[]
-for root, dirs, files in os.walk(path):
-    for filename in files:
-        nfiles+=1
-        #files=files.append(filename + ': ' + str(file_size(filename)) + " bytes")
-        print(root + dirs + files ) 
-        print(file_size(filename))
+for files in os.listdir(path):
+    location = os.path.join(path, files)
+    if os.path.isfile(location):
+        size = os.path.getsize(location)
+        total_s += size
+        top_5.append((size, files))
+        #print(files , size)
 
+top_5.sort(reverse=True, key=lambda s: s[0])
+i=0
+for file_size in top_5:
+        print(file_size)
+        i+=1
+        if i == 5:
+            break
 
-print(nfiles)
-#print(files)
-#print(filesize)
+print("Total files: " + str(total_files))
+print("Total: " + str(total_s))
+avg_file_s = total_s/total_files
+print("Avg File size: " + str(avg_file_s))
