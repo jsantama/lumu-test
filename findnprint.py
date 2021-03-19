@@ -3,10 +3,10 @@ import os
 path=input("Please type the path for check the files: ")
 print("The path will be",path)
 
-path="/var/log"
+#path="/var/log"
 total_s=0
-total_files=len(os.listdir(path))
 top_5 = []
+total_files=0
 
 for files in os.listdir(path):
     location = os.path.join(path, files)
@@ -14,6 +14,7 @@ for files in os.listdir(path):
         size = os.path.getsize(location)
         total_s += size
         top_5.append((size, files))
+        total_files += 1
         #print(files , size)
 
 top_5.sort(reverse=True, key=lambda s: s[0])
